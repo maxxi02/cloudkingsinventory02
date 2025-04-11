@@ -27,10 +27,11 @@ import { Label } from '@radix-ui/react-label';
 import { cn } from '@/lib/utils';
 import { ModeToggle } from '@/components/ui/modeToggle';
 import { Loader } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 export default function Login() {
   const router = useRouter();
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { mutate, isPending } = useMutation({
     mutationFn: loginMutationFn,
   });
@@ -59,14 +60,20 @@ export default function Login() {
           router.replace(`/verify-mfa?email=${values.email}`);
           return;
         }
-        toast.success(`Welcome User ${values.email}`);
-        router.replace(`/dashboard`);
+        toast.success(`Welcome ${values.email}`);
+        setIsLoggedIn(true);
       },
       onError: (error) => {
         toast.error(`${error.message}.`);
       },
     });
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.replace('/dashboard');
+    }
+  }, [isLoggedIn, router]);
 
   return (
     <>
