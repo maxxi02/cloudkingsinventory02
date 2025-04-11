@@ -19,6 +19,9 @@ API.interceptors.response.use(
     const { data, status } = error.response;
     if (data === 'Unauthorized' && status === 401) {
     }
+    if (status === 405) {
+      return Promise.reject({ message: `Method not allowed ${error}` });
+    }
     return Promise.reject({ ...data });
   },
 );
