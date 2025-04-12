@@ -59,9 +59,17 @@ export default function Login() {
           return;
         }
         toast.success(`Welcome ${values.email}`);
-        console.log('Login successful, cookies:');
-        // router.push('/dashboard');
-        window.location.href = '/dashboard';
+        console.log(
+          'Access token exists:',
+          document.cookie.includes('accessToken'),
+        );
+        console.log(
+          'Refresh token exists:',
+          document.cookie.includes('refreshToken'),
+        );
+        setTimeout(() => {
+          router.push('/dashboard');
+        }, 500);
       },
       onError: (error) => {
         toast.error(`${error.message}.`);
