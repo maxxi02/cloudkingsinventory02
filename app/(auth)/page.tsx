@@ -58,13 +58,10 @@ export default function Login() {
           router.replace(`/verify-mfa?email=${values.email}`);
           return;
         }
-        if (response.data.accessToken) {
-          localStorage.setItem('accessToken', response.data.accessToken);
-        }
         toast.success(`Welcome ${values.email}`);
-        console.log('Login successful, cookies:', document.cookie);
-        // window.location.href = '/dashboard';
-        router.replace('/dashboard');
+        console.log('Login successful, cookies:');
+        // router.push('/dashboard');
+        window.location.href = '/dashboard';
       },
       onError: (error) => {
         toast.error(`${error.message}.`);
