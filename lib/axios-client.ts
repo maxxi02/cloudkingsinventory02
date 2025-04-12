@@ -1,7 +1,10 @@
 import axios from 'axios';
 
 const option = {
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  baseURL:
+    process.env.NODE_ENV === 'production'
+      ? 'https://ckinventory.vercel.app/api'
+      : 'http://localhost:7777/api',
   withCredentials: true,
   timeout: 10000,
 };
